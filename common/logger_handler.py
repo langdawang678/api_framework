@@ -36,7 +36,7 @@ class LoggerHandler(logging.Logger):
 
 
 # 一个项目中初始化1个log对象就够了，其他logger_handler_user.py使用时，可以存在同一个log文件里
-logger = LoggerHandler("python25", file="python25.txt")
+# logger = LoggerHandler("python25", file="python25.txt")  # api框架里注释掉
 
 
 # if __name__ == '__main__':

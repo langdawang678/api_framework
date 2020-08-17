@@ -13,10 +13,15 @@ class Config:
     # 测试用例路径
     case_path = os.path.join(root_path, "test_cases")
 
+    # config path
+    config_path = os.path.join(root_path, "config")
+
     # 测试报告路径
     report_path = os.path.join(root_path, "report")
     if not os.path.exists(report_path):
         os.mkdir(report_path)
+
+    yaml_config_path = os.path.join(config_path, "config.yaml")
 
 
 class DevConfig(Config):

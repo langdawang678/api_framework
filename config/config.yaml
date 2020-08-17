@@ -1,0 +1,14 @@
+# logger name
+# logger level
+# logger file
+logger:
+  name: python25
+  level: WARING
+  file: python25.txt
+
+excel:
+  file: cases.xlsx
+  sheet: login
+#
+#request:
+#  method: post
