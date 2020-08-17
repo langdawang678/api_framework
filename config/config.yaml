@@ -1,9 +1,9 @@
-# logger name
+ # logger name
 # logger level
 # logger file
 logger:
   name: python25
-  level: WARING
+  level: WARNING
   file: python25.txt
 
 excel:

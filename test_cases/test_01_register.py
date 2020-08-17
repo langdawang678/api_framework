@@ -1,10 +1,17 @@
 import json
 import unittest
 import ddt
+import yaml
 
+from common.logger_handler import LoggerHandler
 from common.openpyxl_handle import ExcelHandler
 from common.requests_handler import RequestsHandler
 from config.setting import config
+
+# yaml读取
+f = open(config.yaml_config_path, encoding="utf-8")
+#
+yaml_data = yaml.load(f, Loader=yaml.FullLoader)
 
 
 @ddt.ddt
@@ -12,6 +19,10 @@ class TestRegister(unittest.TestCase):
     # 读取数据
     excel_handler = ExcelHandler(config.data_path)
     data = excel_handler.get_all("register")
+
+    logger = LoggerHandler(name=yaml_data["logger"]["name"],
+                           level=yaml_data["logger"]["level"],
+                           file=yaml_data["logger"]["file"])
 
     def setUp(self) -> None:
         self.req = RequestsHandler()
@@ -29,7 +40,12 @@ class TestRegister(unittest.TestCase):
                              json=json.loads(test_data["json"]),
                              # excel读取的是str（json字符串），需要转为dict（json格式）
                              headers=json.loads(test_data["headers"]))
-
-        self.assertEqual(test_data["expected"], res["code"])
+        try:
+            self.assertEqual(test_data["expected"], res["code"])
+        except AssertionError as e:
+            # 记录logger
+            self.logger.error("测试用例执行失败", e)
+            # 捕获异常后，一定要抛出，否则用例是pass的
+            raise e
 
         # 把实际结果写入excel。 实际不太用得到，因为输出到测试报告中了。

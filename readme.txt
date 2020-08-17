@@ -35,7 +35,7 @@ DDT  htmltestrunner修改版的放在接口框架的libs下
 
 框架的分层
 1、测试代码主入口，run_test.py
-2、测试用例包,test_cases
+2、测试逻辑/用例包,test_cases，各个模块的测试用例方法
 3、数据管理层，excel，csv，py文件-list，dict，yaml文件等
 4、业务逻辑层，requests_handler,excel_handler通用的
 # logger 访问数据库
