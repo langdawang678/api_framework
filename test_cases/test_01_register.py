@@ -42,10 +42,22 @@ class TestRegister(unittest.TestCase):
                              headers=json.loads(test_data["headers"]))
         try:
             self.assertEqual(test_data["expected"], res["code"])
+            # 把实际结果写入excel。 实际不太用得到，因为输出到测试报告中了。
+            self.excel_handler.write2(config.config_path,
+                                      'register',
+                                      test_data['case_id']+1,
+                                      9,
+                                      "测试通过")
+
         except AssertionError as e:
             # 记录logger
             self.logger.error("测试用例执行失败", e)
+            self.excel_handler.write2(config.config_path,
+                                      'register',
+                                      test_data['case_id']+1,
+                                      9,
+                                      "测试失败")
             # 捕获异常后，一定要抛出，否则用例是pass的
             raise e
 
-        # 把实际结果写入excel。 实际不太用得到，因为输出到测试报告中了。
+
