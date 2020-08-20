@@ -12,3 +12,11 @@ excel:
 #
 #request:
 #  method: post
+
+database:
+  host: '120.78.128.25'
+  port: 3306
+  user: 'future'
+  password: '123456'
+  charset: 'utf8'
+  database: 'futureloan'

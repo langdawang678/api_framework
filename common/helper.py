@@ -18,8 +18,7 @@
 # coding=utf-8
 import random
 
-
-def gen_mobile():
+def generate_mobile():
     """自动生成手机号"""
     phone = '1' + random.choice(['3', '5', '7', '8', '9'])
     for i in range(9):
@@ -28,4 +27,4 @@ def gen_mobile():
     return phone
 
 if __name__ == '__main__':
-    print(gen_mobile())
+    print(generate_mobile())
