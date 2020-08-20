@@ -42,3 +42,5 @@ DDT  htmltestrunner修改版的放在接口框架的libs下
 5、配置文件（和项目是相关的，项目地址，数据库地址，logger级别）
 6、测试报告（输出）
 
+
+setup

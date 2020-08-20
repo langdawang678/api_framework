@@ -20,3 +20,7 @@ database:
   password: '123456'
   charset: 'utf8'
   database: 'futureloan'
+
+user:
+  mobile_phone: "13712341234"
+  pwd: "12345678"
