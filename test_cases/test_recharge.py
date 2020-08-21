@@ -15,6 +15,8 @@ from common.requests_handler import RequestsHandler
 from config.setting import config
 
 # yaml读取
+from middleware.helper import save_token, Context
+
 f = open(config.yaml_config_path, encoding="utf-8")
 #
 yaml_data = yaml.load(f, Loader=yaml.FullLoader)
@@ -41,7 +43,11 @@ class TestRecharge(unittest.TestCase):
                             password=yaml_data['database']['password'],
                             database=yaml_data['database']['database'],
                             charset=yaml_data['database']['charset'])
-        # 登录
+        # 登录 结果
+        save_token()
+
+        token = Context.token
+        member_id = Context.member_id
 
     def tearDown(self) -> None:
         self.req.close_session()
