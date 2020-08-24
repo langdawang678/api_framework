@@ -44,7 +44,7 @@ def save_token():
     member_id = jsonpath(data, '$..id')[0]
 
     # 拼接json
-    token = ' '.join([token_type, token])
+    token = ' '.join([token_type, token])  # token_type这里加了 Bearer
 
     # 用于充值接口前的取数据
     Context.token = token
