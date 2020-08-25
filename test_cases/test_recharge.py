@@ -90,7 +90,7 @@ class TestRecharge(unittest.TestCase):
             sql = 'SELECT * FROM member WHERE id=%s;'
             user = self.db.query(sql, args=[member_id])
             after_money = user['leave_amount']
-            self.assertEqual(before_money + money, after_money)
+            self.assertEqual(int(before_money) + int(money), int(after_money))
 
 
 # 运行的时候一定要注意右键的位置，否则会出现奇怪的报错
