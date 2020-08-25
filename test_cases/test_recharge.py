@@ -64,7 +64,7 @@ class TestRecharge(unittest.TestCase):
 
         sql = 'SELECT * FROM member WHERE id=%s;'
         user = self.db.query(sql, args=[member_id])
-        before_amount = user['leave_amount']
+        before_money = user['leave_amount']
 
         if '#member_id#' in test_data['json']:
             test_data['json'] = test_data['json'].replace('#member_id#', str(member_id))
@@ -77,20 +77,23 @@ class TestRecharge(unittest.TestCase):
                              # excel读取的是str（json字符串），需要转为dict（json格式）
                              # headers=json.loads(test_data["headers"]),
                              headers=headers)
-        print(res)
+        print(res)  # 这里充值金额为100时，返回失败，提示：
+        # {'code': 2, 'msg': '余额必须为数值型', 'data': None,。。。
 
         # 校验1，判断是否充值成功
         self.assertEqual(test_data['expected'], res['code'])
 
         # 校验2：如果成功，则查询数据库，做充值前后的对比
         if res['code'] == 0:
-            money = json.loads((test_data['json']['amount']))
+            # money = json.loads((test_data['json']['amount']))  # TypeError: string indices must be integers
+            money = json.loads((test_data['json']))['amount']
             sql = 'SELECT * FROM member WHERE id=%s;'
             user = self.db.query(sql, args=[member_id])
-            after_amount = user['leave_amount']
-            self.assertEqual(before_amount + after_amount, money)
+            after_money = user['leave_amount']
+            self.assertEqual(before_money + money, after_money)
 
 
 # 运行的时候一定要注意右键的位置，否则会出现奇怪的报错
 if __name__ == '__main__':
     unittest.run()
+

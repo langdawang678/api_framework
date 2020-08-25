@@ -22,5 +22,6 @@ database:
   database: 'futureloan'
 
 user:
-  mobile_phone: "13712341234"
+#  mobile_phone: "13712341234"  # 0824早上还是好的，0825{'code': 1001, 'msg': '账号信息错误', 'data': None
+  mobile_phone: "18111111111"
   pwd: "12345678"

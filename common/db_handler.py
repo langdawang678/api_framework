@@ -23,6 +23,11 @@ class DBHandler:
 
     def query(self, sql, args=None, one=True):
         self.cursor.execute(sql, args)
+
+        # todo
+        # commit这条特别重要：不然数据变更了，重复调用db对象时，还是同一个查询结果
+        self.conn.commit()
+
         if one:
             return self.cursor.fetchone()
         else:
