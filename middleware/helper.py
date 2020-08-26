@@ -32,6 +32,11 @@ class Context:
     token = ''
     member_id = None
 
+def loan_id():
+    """
+    查询数据库，得到loan_id，临时变量保存到Context中
+    """
+    pass
 
 def save_token():
     """保存token信息"""
