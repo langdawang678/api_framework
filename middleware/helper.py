@@ -4,6 +4,10 @@
 # @author：langdawang678
 import re
 
+import yaml
+from jsonpath import jsonpath
+
+from common.db_handler import DBHandler
 from common.requests_handler import RequestsHandler
 from config.setting import config
 from middleware.yaml_handler import yaml_data
@@ -22,10 +26,7 @@ def login():
     return res
 
 
-def loan_id():
-    """
-    查询数据库，得到loan_id，临时变量保存到Context中
-    """
+def login_admin():
     pass
 
 class Context:
@@ -36,16 +37,45 @@ class Context:
     方式1：setup中登录
     方式2：excel中，把登录case放在最前面
     '''
-    member_id = 888
-    loan_id = 777
-    token = 'aofowelfsf'
-    username = 'yuz'
+    # member_id = ''
+    # loan_id = None
 
     @property
     def loan_id(self):
         """查询数据库，得到loan_id，临时便便存到Context中
         return到loadn标当中的id值"""
+        f = open(config.yaml_config_path, encoding="utf-8")
+        #
+        self.yaml_data = yaml.load(f, Loader=yaml.FullLoader)
+        db = DBHandler(host=yaml_data['database']['host'],
+                            port=self.yaml_data['database']['port'],
+                            user=self.yaml_data['database']['user'],
+                            password=self.yaml_data['database']['password'],
+                            database=self.yaml_data['database']['database'],
+                            charset=self.yaml_data['database']['charset'])
+        loan = db.query('SELECT * FROM loan WHERE status=2 limit 100;')  # status=2正在投标中
+        db.close()
+        return loan['id']
+
+    @property
+    def token(self):
+        """会动态变化的动态属性，Context().token会调用"""
+        data = login()
+        t = jsonpath(data, '$..token')[0]  # 这里不要命名为token，否则和函数名冲突
+        token_type = jsonpath(data, '$..token_type')[0]
+        t = " ".join([token_type, t])
+        return t
+
+    @property
+    def member_id(self):
+        data = login()
+        m_id = jsonpath(data, '$..id')[0]
+        return m_id
+
+    @property
+    def admin_member_id(self):
         pass
+
 
 def save_token():
     """保存token信息"""
@@ -78,9 +108,6 @@ def replace_label(target):
 
 
 if __name__ == '__main__':
-    # print(login())
-    # data = save_token()
-    # print(data)
-    mystr = '{"member_id":"#member_id#","loan_id":"#loan_id#","token":"#token#","username":"#username#"}'
-    a = replace_label(mystr)
-    print(a)
+    print(Context().token)  # 要用对象去调用方法，不能少()
+    print(Context().member_id)
+    print(Context().loan_id)

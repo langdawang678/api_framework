@@ -77,8 +77,7 @@ class TestRecharge(unittest.TestCase):
                              # excel读取的是str（json字符串），需要转为dict（json格式）
                              # headers=json.loads(test_data["headers"]),
                              headers=headers)
-        print(res)  # 这里充值金额为100时，返回失败，提示：
-        # {'code': 2, 'msg': '余额必须为数值型', 'data': None,。。。
+        print(res)
 
         # 校验1，判断是否充值成功
         self.assertEqual(test_data['expected'], res['code'])
